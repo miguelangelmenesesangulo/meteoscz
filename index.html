@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1056, initial-scale=1.0">
 <title>Meteo Santa Cruz - LED</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,15 +13,13 @@
         color: #e0e6f0;
         overflow: hidden;
         margin: 0 auto;
-        display: flex; align-items: center; justify-content: center;
     }
 
-    /* ============ GRID PRINCIPAL ============ */
     .dashboard {
         width: 1056px; height: 288px;
-        display: grid;
-        grid-template-columns: 340px 1fr 300px;
-        gap: 8px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
         padding: 8px;
         background: linear-gradient(135deg, #0a0e17 0%, #141c2b 100%);
     }
@@ -32,13 +29,33 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 10px 14px;
-        display: flex; flex-direction: column;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
         justify-content: space-between;
         overflow: hidden;
     }
 
+    .col-1 { width: 340px; margin-right: 8px; }
+    .col-2 { width: 380px; margin-right: 8px; }
+    .col-3 { width: 300px; }
+
     .card-header {
-        display: flex; align-items: center; justify-content: space-between;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
         margin-bottom: 4px;
     }
     .card-title {
@@ -48,10 +65,15 @@
     }
     .card-icon { font-size: 16px; opacity: 0.7; }
 
-    /* ============ CUADRANTE 1: Ciudad + Temp ============ */
+    /* ====== CUADRANTE 1 ====== */
     .col-city {
-        align-items: center; text-align: center; justify-content: center;
-        gap: 2px;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
     }
     .city-name {
         font-size: 18px; font-weight: 800;
@@ -60,29 +82,31 @@
     }
     .city-time {
         font-size: 13px; color: #7a8ba8; font-weight: 500;
+        margin-top: 2px;
     }
     .temp-big {
-        font-size: 74px; font-weight: 800; line-height: 0.95;
-        background: linear-gradient(180deg, #ffffff 0%, #a0c4ff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin: 4px 0 2px 0;
+        font-size: 74px; font-weight: 800; line-height: 1;
+        color: #dbe9ff;
+        margin: 6px 0 2px 0;
     }
     .feels-like {
         font-size: 15px; color: #9aabc8; font-weight: 500;
     }
     .weather-desc {
         font-size: 17px; color: #c0d0e8; font-weight: 600;
-        margin-top: 3px;
+        margin-top: 4px;
     }
 
-    /* ============ CUADRANTE 2: Detalles ============ */
+    /* ====== CUADRANTE 2 ====== */
     .details-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 8px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin: -4px;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
         flex: 1;
     }
     .detail-item {
@@ -90,9 +114,22 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         padding: 8px 12px;
-        display: flex; flex-direction: column;
+        width: 50%;
+        height: 50%;
+        box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
-        gap: 2px;
+    }
+    .detail-item-inner {
+        padding: 0 4px;
     }
     .detail-label {
         font-size: 12px; color: #7a8ba8;
@@ -102,51 +139,75 @@
     .detail-value {
         font-size: 30px; font-weight: 800;
         color: #ffffff; line-height: 1;
-        display: flex; align-items: baseline; gap: 4px;
+        margin-top: 4px;
     }
     .detail-unit {
         font-size: 14px; font-weight: 500; color: #8a9bb8;
     }
 
-    /* ============ CUADRANTE 3: Pronóstico + UV + Alertas ============ */
+    /* ====== CUADRANTE 3 ====== */
     .forecast-list {
-        display: flex; flex-direction: column;
-        gap: 4px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
     }
     .forecast-row {
-        display: grid;
-        grid-template-columns: 52px 26px 1fr 1fr;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
-        gap: 4px;
-        padding: 4px 8px;
+        padding: 5px 8px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.045);
+        margin-bottom: 4px;
     }
     .forecast-day {
         font-size: 12px; font-weight: 700;
         color: #a0b0c8; text-transform: uppercase;
         letter-spacing: 0.8px;
+        width: 52px;
     }
-    .forecast-icon { font-size: 16px; text-align: center; }
+    .forecast-icon {
+        font-size: 16px;
+        width: 26px;
+        text-align: center;
+    }
     .forecast-max {
         font-size: 16px; font-weight: 800;
-        color: #ffb86b; text-align: right;
+        color: #ffb86b;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        text-align: right;
+        padding-right: 8px;
     }
     .forecast-min {
         font-size: 16px; font-weight: 600;
-        color: #6a9bd8; text-align: right;
+        color: #6a9bd8;
+        width: 40px;
+        text-align: right;
     }
 
-    /* UV */
     .uv-row {
-        display: flex; align-items: center; gap: 8px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
         padding: 5px 10px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.045);
         border-left: 4px solid #4ade80;
         margin-top: 4px;
     }
-    .uv-icon { font-size: 16px; }
+    .uv-icon { font-size: 16px; margin-right: 6px; }
     .uv-label {
         font-size: 11px; color: #7a8ba8;
         font-weight: 700; letter-spacing: 1px;
@@ -155,149 +216,125 @@
     .uv-value {
         font-size: 18px; font-weight: 800;
         margin-left: auto;
+        margin-right: 6px;
     }
     .uv-cat { font-size: 11px; font-weight: 600; opacity: 0.85; }
 
-    /* ============ ALERTAS ============ */
+    /* ====== ALERTAS ====== */
     .alert-box {
-        flex: 1;
-        display: flex; flex-direction: column;
-        gap: 4px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
         overflow: hidden;
     }
 
     .alert-item {
-        display: flex; align-items: center; gap: 8px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
         padding: 6px 10px;
         border-radius: 8px;
         font-size: 13px; font-weight: 800;
         letter-spacing: 0.3px;
-        white-space: nowrap; overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         text-transform: uppercase;
-        position: relative;
         border: 2px solid transparent;
+        margin-bottom: 4px;
     }
     .alert-item .ico {
-        font-size: 16px; flex-shrink: 0;
+        font-size: 16px;
+        margin-right: 8px;
         display: inline-block;
     }
 
-    /* ==== INFO (azul) ==== */
     .alert-item.info {
-        background: linear-gradient(90deg, rgba(59,130,246,0.35) 0%, rgba(59,130,246,0.12) 100%);
+        background: rgba(59,130,246,0.35);
         color: #dbeafe;
         border-color: #3b82f6;
-        box-shadow: 0 0 10px rgba(59,130,246,0.5), inset 0 0 8px rgba(59,130,246,0.2);
     }
-
-    /* ==== WARN (ámbar) - pulsa ==== */
     .alert-item.warn {
-        background: linear-gradient(90deg, rgba(245,158,11,0.45) 0%, rgba(245,158,11,0.15) 100%);
+        background: rgba(245,158,11,0.45);
         color: #fff7d6;
         border-color: #f59e0b;
-        box-shadow: 0 0 14px rgba(245,158,11,0.7), inset 0 0 10px rgba(245,158,11,0.25);
-        animation: warnPulse 1.4s ease-in-out infinite;
+        -webkit-animation: warnPulse 1.4s infinite;
+        animation: warnPulse 1.4s infinite;
     }
-    .alert-item.warn .ico {
-        animation: shake 1.6s ease-in-out infinite;
-    }
-
-    /* ==== DANGER (rojo) - FLASH agresivo ==== */
     .alert-item.danger {
-        background: linear-gradient(90deg, rgba(220,38,38,0.75) 0%, rgba(220,38,38,0.35) 100%);
+        background: rgba(220,38,38,0.75);
         color: #ffffff;
         border-color: #ff2d2d;
-        box-shadow: 0 0 20px rgba(255,45,45,0.9), inset 0 0 14px rgba(255,45,45,0.5);
+        -webkit-animation: dangerFlash 0.8s steps(1) infinite;
         animation: dangerFlash 0.8s steps(1) infinite;
-        text-shadow: 0 0 6px rgba(255,255,255,0.9), 0 0 12px rgba(255,45,45,0.8);
     }
-    .alert-item.danger .ico {
-        animation: shake 0.5s ease-in-out infinite;
-        filter: drop-shadow(0 0 6px #fff);
-    }
-
-    /* ==== OK (verde) ==== */
     .alert-item.ok {
         background: rgba(34,197,94,0.12);
         color: #86efac;
         border-color: rgba(34,197,94,0.5);
-        box-shadow: 0 0 8px rgba(34,197,94,0.25);
     }
 
-    /* ==== ANIMACIONES ==== */
+    @-webkit-keyframes dangerFlash {
+        0%, 49% { background: rgba(220,38,38,0.9); border-color: #ff2d2d; }
+        50%, 100% { background: rgba(90,10,10,0.7); border-color: #7a0a0a; }
+    }
     @keyframes dangerFlash {
-        0%, 49% {
-            background: linear-gradient(90deg, rgba(220,38,38,0.85) 0%, rgba(220,38,38,0.4) 100%);
-            border-color: #ff2d2d;
-            box-shadow: 0 0 24px rgba(255,45,45,1), inset 0 0 16px rgba(255,45,45,0.6);
-        }
-        50%, 100% {
-            background: linear-gradient(90deg, rgba(120,10,10,0.7) 0%, rgba(80,5,5,0.5) 100%);
-            border-color: #7a0a0a;
-            box-shadow: 0 0 6px rgba(255,45,45,0.4), inset 0 0 8px rgba(0,0,0,0.6);
-        }
+        0%, 49% { background: rgba(220,38,38,0.9); border-color: #ff2d2d; }
+        50%, 100% { background: rgba(90,10,10,0.7); border-color: #7a0a0a; }
+    }
+    @-webkit-keyframes warnPulse {
+        0%, 100% { border-color: #f59e0b; }
+        50% { border-color: #ffbf47; }
     }
     @keyframes warnPulse {
-        0%, 100% {
-            box-shadow: 0 0 12px rgba(245,158,11,0.6), inset 0 0 8px rgba(245,158,11,0.2);
-            border-color: #f59e0b;
-        }
-        50% {
-            box-shadow: 0 0 24px rgba(245,158,11,1), inset 0 0 14px rgba(245,158,11,0.4);
-            border-color: #ffbf47;
-        }
-    }
-    @keyframes shake {
-        0%, 100% { transform: translateX(0) rotate(0deg); }
-        20%      { transform: translateX(-2px) rotate(-8deg); }
-        40%      { transform: translateX(2px)  rotate(8deg); }
-        60%      { transform: translateX(-2px) rotate(-6deg); }
-        80%      { transform: translateX(2px)  rotate(6deg); }
+        0%, 100% { border-color: #f59e0b; }
+        50% { border-color: #ffbf47; }
     }
 
-    /* ==== BANNER CRÍTICO — UNA SOLA LÍNEA ==== */
     .critical-banner {
-        display: flex; align-items: center; justify-content: center; gap: 6px;
+        display: block;
         padding: 3px 8px;
         margin-bottom: 3px;
         border-radius: 6px;
-        background: linear-gradient(90deg, #dc2626 0%, #7f1d1d 50%, #dc2626 100%);
-        background-size: 200% 100%;
+        background: #dc2626;
         color: #fff;
         font-size: 10px; font-weight: 900;
         letter-spacing: 1px;
         text-transform: uppercase;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.2;
-        text-shadow: 0 0 6px rgba(255,255,255,0.9);
-        box-shadow: 0 0 16px rgba(255,45,45,0.9), inset 0 0 8px rgba(0,0,0,0.4);
+        text-align: center;
         border: 1.5px solid #ff5555;
-        animation: bannerScroll 2s linear infinite, dangerFlash 0.8s steps(1) infinite;
-    }
-    .critical-banner span {
-        display: inline-block;
-        white-space: nowrap;
-    }
-    @keyframes bannerScroll {
-        0%   { background-position: 0% 50%; }
-        100% { background-position: 200% 50%; }
+        -webkit-animation: dangerFlash 0.8s steps(1) infinite;
+        animation: dangerFlash 0.8s steps(1) infinite;
     }
 
-    /* ==== ESTADOS GLOBALES ==== */
-    @keyframes pulse { 0%,100%{opacity:0.4;} 50%{opacity:1;} }
+    @-webkit-keyframes pulse {
+        0%,100% { opacity: 0.4; }
+        50% { opacity: 1; }
+    }
+    @keyframes pulse {
+        0%,100% { opacity: 0.4; }
+        50% { opacity: 1; }
+    }
     .live-dot {
         display: inline-block; width: 7px; height: 7px;
         border-radius: 50%; background: #4ade80;
-        animation: pulse 2s infinite; margin-right: 5px;
-        vertical-align: middle;
+        -webkit-animation: pulse 2s infinite;
+        animation: pulse 2s infinite;
+        margin-right: 5px;
     }
     .loading, .error {
-        grid-column: 1 / -1;
-        align-self: center; justify-self: center;
+        align-self: center;
+        margin: auto;
         font-size: 16px; color: #7a8ba8;
+        text-align: center;
     }
     .error { color: #ff6b6b; }
 </style>
@@ -308,257 +345,284 @@
     <div class="loading">Cargando datos meteorológicos...</div>
 </div>
 
-<script>
+<script type="text/javascript">
     // ============================================================
     // CONFIGURACIÓN
     // ============================================================
-    const LAT = -17.7833;
-    const LON = -63.1833;
-    const CIUDAD = "Santa Cruz de la Sierra";
-    const REFRESH_MS = 5 * 60 * 1000;
+    var LAT = -17.7833;
+    var LON = -63.1833;
+    var CIUDAD = "Santa Cruz de la Sierra";
+    var REFRESH_MS = 5 * 60 * 1000;
 
     // ============================================================
-    // CÓDIGOS WMO → ICONOS / DESCRIPCIÓN
+    // CÓDIGOS WMO
     // ============================================================
     function getWeatherInfo(code) {
-        const map = {
-            0:{icon:"☀️",desc:"Despejado"},         1:{icon:"🌤️",desc:"Mayormente despejado"},
-            2:{icon:"⛅",desc:"Parcialmente nublado"},3:{icon:"☁️",desc:"Nublado"},
-            45:{icon:"🌫️",desc:"Niebla"},            48:{icon:"🌫️",desc:"Niebla con escarcha"},
-            51:{icon:"🌦️",desc:"Llovizna ligera"},   53:{icon:"🌦️",desc:"Llovizna moderada"},
-            55:{icon:"🌧️",desc:"Llovizna densa"},    56:{icon:"🌧️",desc:"Llovizna helada"},
-            57:{icon:"🌧️",desc:"Llovizna helada"},   61:{icon:"🌧️",desc:"Lluvia ligera"},
-            63:{icon:"🌧️",desc:"Lluvia moderada"},   65:{icon:"🌧️",desc:"Lluvia fuerte"},
-            66:{icon:"🌧️",desc:"Lluvia helada"},     67:{icon:"🌧️",desc:"Lluvia helada"},
-            71:{icon:"❄️",desc:"Nieve ligera"},      73:{icon:"❄️",desc:"Nieve moderada"},
-            75:{icon:"❄️",desc:"Nieve fuerte"},      77:{icon:"❄️",desc:"Granos de nieve"},
-            80:{icon:"🌦️",desc:"Chubascos ligeros"}, 81:{icon:"🌧️",desc:"Chubascos moderados"},
-            82:{icon:"🌧️",desc:"Chubascos violentos"},85:{icon:"❄️",desc:"Chubascos de nieve"},
-            86:{icon:"❄️",desc:"Chubascos de nieve"},95:{icon:"⛈️",desc:"Tormenta"},
-            96:{icon:"⛈️",desc:"Tormenta c/ granizo"},99:{icon:"⛈️",desc:"Tormenta c/ granizo"}
+        var map = {
+            0:{icon:"☀",desc:"Despejado"},          1:{icon:"🌤",desc:"Mayormente despejado"},
+            2:{icon:"⛅",desc:"Parcialmente nublado"},3:{icon:"☁",desc:"Nublado"},
+            45:{icon:"🌫",desc:"Niebla"},             48:{icon:"🌫",desc:"Niebla c/escarcha"},
+            51:{icon:"🌦",desc:"Llovizna ligera"},    53:{icon:"🌦",desc:"Llovizna moderada"},
+            55:{icon:"🌧",desc:"Llovizna densa"},     61:{icon:"🌧",desc:"Lluvia ligera"},
+            63:{icon:"🌧",desc:"Lluvia moderada"},    65:{icon:"🌧",desc:"Lluvia fuerte"},
+            80:{icon:"🌦",desc:"Chubascos"},          81:{icon:"🌧",desc:"Chubascos moderados"},
+            82:{icon:"🌧",desc:"Chubascos fuertes"},  95:{icon:"⛈",desc:"Tormenta"},
+            96:{icon:"⛈",desc:"Tormenta c/granizo"}, 99:{icon:"⛈",desc:"Tormenta fuerte"}
         };
-        return map[code] || {icon:"❓",desc:"Desconocido"};
+        return map[code] || {icon:"?", desc:"Desconocido"};
     }
 
-    // ============================================================
-    // UV: categoría y color
-    // ============================================================
     function getUVInfo(uv) {
-        if (uv < 3)  return {cat:"Bajo",      color:"#4ade80"};
-        if (uv < 6)  return {cat:"Moderado",  color:"#facc15"};
-        if (uv < 8)  return {cat:"Alto",      color:"#fb923c"};
-        if (uv < 11) return {cat:"Muy alto",  color:"#ef4444"};
+        if (uv < 3)  return {cat:"Bajo",     color:"#4ade80"};
+        if (uv < 6)  return {cat:"Moderado", color:"#facc15"};
+        if (uv < 8)  return {cat:"Alto",     color:"#fb923c"};
+        if (uv < 11) return {cat:"Muy alto", color:"#ef4444"};
         return {cat:"Extremo", color:"#a855f7"};
     }
 
     // ============================================================
-    // ALERTAS DINÁMICAS (con prioridad)
+    // ALERTAS
     // ============================================================
-    function getAlerts(current, daily) {
-        const alerts = [];
+    function getAlerts(c, d) {
+        var alerts = [];
+        var prob = (d.precipitation_probability_max && d.precipitation_probability_max[0]) || 0;
+        var prec = c.precipitation || 0;
+        var wind = c.wind_speed_10m || 0;
+        var temp = c.temperature_2m || 0;
+        var uv   = c.uv_index || 0;
 
-        const prob = daily.precipitation_probability_max?.[0] ?? 0;
-        const prec = current.precipitation ?? 0;
-        const wind = current.wind_speed_10m ?? 0;
-        const temp = current.temperature_2m ?? 0;
-        const uv   = current.uv_index ?? 0;
+        if (prob >= 80)      alerts.push({icon:"🌧", text:"LLUVIA MUY PROBABLE " + prob + "%",   level:"danger", prio:1});
+        else if (prob >= 60) alerts.push({icon:"🌧", text:"LLUVIA PROBABLE " + prob + "%",       level:"warn",   prio:2});
+        else if (prob >= 40) alerts.push({icon:"🌦", text:"POSIBLE LLUVIA " + prob + "%",        level:"info",   prio:5});
 
-        // --- LLUVIA ---
-        if (prob >= 80)      alerts.push({icon:"🌧️", text:`LLUVIA MUY PROBABLE ${prob}%`,   level:"danger", prio:1});
-        else if (prob >= 60) alerts.push({icon:"🌧️", text:`LLUVIA PROBABLE ${prob}%`,       level:"warn",   prio:2});
-        else if (prob >= 40) alerts.push({icon:"🌦️", text:`POSIBLE LLUVIA ${prob}%`,        level:"info",   prio:5});
+        if (prec >= 5)       alerts.push({icon:"💧", text:"LLUVIA INTENSA AHORA " + prec + "mm", level:"danger", prio:1});
+        else if (prec >= 1)  alerts.push({icon:"💧", text:"PRECIPITACIÓN " + prec + "mm",        level:"warn",   prio:3});
 
-        if (prec >= 5)       alerts.push({icon:"💧", text:`LLUVIA INTENSA AHORA ${prec}mm`, level:"danger", prio:1});
-        else if (prec >= 1)  alerts.push({icon:"💧", text:`PRECIPITACIÓN ${prec}mm`,        level:"warn",   prio:3});
+        if (wind >= 60)      alerts.push({icon:"💨", text:"VIENTO FUERTE " + Math.round(wind) + " KM/H",   level:"danger", prio:1});
+        else if (wind >= 40) alerts.push({icon:"💨", text:"VIENTO MODERADO " + Math.round(wind) + " KM/H", level:"warn",   prio:3});
 
-        // --- VIENTO ---
-        if (wind >= 60)      alerts.push({icon:"💨", text:`VIENTO FUERTE ${Math.round(wind)} KM/H`,  level:"danger", prio:1});
-        else if (wind >= 40) alerts.push({icon:"💨", text:`VIENTO MODERADO ${Math.round(wind)} KM/H`,level:"warn",   prio:3});
+        if (temp >= 37)      alerts.push({icon:"🔥", text:"CALOR EXTREMO " + Math.round(temp) + "°C", level:"danger", prio:1});
+        else if (temp >= 34) alerts.push({icon:"🌡", text:"CALOR ELEVADO " + Math.round(temp) + "°C", level:"warn",   prio:3});
+        else if (temp <= 5)  alerts.push({icon:"❄", text:"FRÍO INTENSO " + Math.round(temp) + "°C",   level:"danger", prio:1});
+        else if (temp <= 10) alerts.push({icon:"🧥", text:"FRÍO " + Math.round(temp) + "°C",           level:"warn",   prio:4});
 
-        // --- TEMPERATURA ---
-        if (temp >= 37)      alerts.push({icon:"🔥", text:`CALOR EXTREMO ${Math.round(temp)}°C`, level:"danger", prio:1});
-        else if (temp >= 34) alerts.push({icon:"🌡️", text:`CALOR ELEVADO ${Math.round(temp)}°C`, level:"warn",   prio:3});
-        else if (temp <= 5)  alerts.push({icon:"❄️", text:`FRÍO INTENSO ${Math.round(temp)}°C`,  level:"danger", prio:1});
-        else if (temp <= 10) alerts.push({icon:"🧥", text:`FRÍO ${Math.round(temp)}°C`,          level:"warn",   prio:4});
+        if (uv >= 8)         alerts.push({icon:"☀", text:"RADIACIÓN UV MUY ALTA " + Math.round(uv), level:"danger", prio:2});
+        else if (uv >= 6)    alerts.push({icon:"☀", text:"RADIACIÓN UV ALTA " + Math.round(uv),     level:"warn",   prio:4});
 
-        // --- UV ---
-        if (uv >= 8)         alerts.push({icon:"☀️", text:`RADIACIÓN UV MUY ALTA ${Math.round(uv)}`, level:"danger", prio:2});
-        else if (uv >= 6)    alerts.push({icon:"☀️", text:`RADIACIÓN UV ALTA ${Math.round(uv)}`,     level:"warn",   prio:4});
-
-        alerts.sort((a, b) => a.prio - b.prio);
+        alerts.sort(function(a, b){ return a.prio - b.prio; });
 
         if (alerts.length === 0) {
-            alerts.push({icon:"✅", text:"SIN ALERTAS ACTIVAS", level:"ok", prio:99});
+            alerts.push({icon:"✓", text:"SIN ALERTAS ACTIVAS", level:"ok", prio:99});
         }
         return alerts;
     }
 
     // ============================================================
-    // FORMATO FECHA/HORA BOLIVIA
+    // FECHA/HORA BOLIVIA (formato manual, sin toLocaleString)
     // ============================================================
-    function formatHoraBolivia(date = new Date()) {
-        return date.toLocaleString("es-BO", {
-            timeZone:"America/La_Paz", hour:"2-digit", minute:"2-digit", hour12:false
-        });
+    function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+
+    function getBoliviaDate() {
+        // UTC-4
+        var now = new Date();
+        var utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        return new Date(utc - (4 * 3600000));
     }
-    function formatFechaBolivia(date = new Date()) {
-        return date.toLocaleDateString("es-BO", {
-            timeZone:"America/La_Paz", weekday:"short", day:"numeric", month:"short"
-        });
+
+    function formatHoraBolivia(d) {
+        return pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+    }
+
+    function formatFechaBolivia(d) {
+        var dias = ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"];
+        var meses = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+        return dias[d.getDay()] + " " + d.getDate() + " " + meses[d.getMonth()];
     }
 
     // ============================================================
-    // FETCH OPEN-METEO (sin API key)
+    // CONSULTA A LA API — XMLHttpRequest (compatible con motores viejos)
     // ============================================================
-    async function fetchWeather() {
-        const url = `https://api.open-meteo.com/v1/forecast?` +
-            `latitude=${LAT}&longitude=${LON}` +
-            `&current=temperature_2m,relative_humidity_2m,apparent_temperature,` +
-            `precipitation,weather_code,wind_speed_10m,wind_direction_10m,uv_index` +
-            `&daily=weather_code,temperature_2m_max,temperature_2m_min,` +
-            `precipitation_sum,precipitation_probability_max,uv_index_max` +
-            `&timezone=America%2FLa_Paz&forecast_days=2`;
+    function fetchWeather(callback) {
+        var url = "https://api.open-meteo.com/v1/forecast?" +
+            "latitude=" + LAT + "&longitude=" + LON +
+            "&current=temperature_2m,relative_humidity_2m,apparent_temperature," +
+            "precipitation,weather_code,wind_speed_10m,wind_direction_10m,uv_index" +
+            "&daily=weather_code,temperature_2m_max,temperature_2m_min," +
+            "precipitation_sum,precipitation_probability_max,uv_index_max" +
+            "&timezone=America%2FLa_Paz&forecast_days=2";
 
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        return await resp.json();
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.timeout = 20000;
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        callback(null, data);
+                    } catch(e) {
+                        callback(new Error("JSON inválido: " + e.message), null);
+                    }
+                } else {
+                    callback(new Error("HTTP " + xhr.status), null);
+                }
+            }
+        };
+        xhr.ontimeout = function() { callback(new Error("Timeout (sin respuesta)"), null); };
+        xhr.onerror   = function() { callback(new Error("Error de red / sin conexión"), null); };
+
+        try {
+            xhr.send();
+        } catch(e) {
+            callback(new Error("No se pudo enviar petición: " + e.message), null);
+        }
     }
 
     // ============================================================
     // RENDER
     // ============================================================
     function renderDashboard(data) {
-        const c = data.current;
-        const d = data.daily;
-        const now = new Date();
+        var c = data.current;
+        var d = data.daily;
+        var now = getBoliviaDate();
 
-        const wNow  = getWeatherInfo(c.weather_code);
-        const temp  = Math.round(c.temperature_2m);
-        const feels = Math.round(c.apparent_temperature);
-        const hum   = c.relative_humidity_2m;
-        const wind  = Math.round(c.wind_speed_10m);
-        const prec  = (c.precipitation ?? 0).toFixed(1);
-        const prob  = d.precipitation_probability_max?.[0] ?? 0;
-        const uv    = c.uv_index ?? 0;
-        const uvInfo = getUVInfo(uv);
+        var wNow  = getWeatherInfo(c.weather_code);
+        var temp  = Math.round(c.temperature_2m);
+        var feels = Math.round(c.apparent_temperature);
+        var hum   = c.relative_humidity_2m;
+        var wind  = Math.round(c.wind_speed_10m);
+        var prec  = (c.precipitation || 0).toFixed(1);
+        var prob  = (d.precipitation_probability_max && d.precipitation_probability_max[0]) || 0;
+        var uv    = c.uv_index || 0;
+        var uvInfo = getUVInfo(uv);
 
-        const dirs = ["N","NE","E","SE","S","SO","O","NO"];
-        const windDir = dirs[Math.round(c.wind_direction_10m / 45) % 8];
+        var dirs = ["N","NE","E","SE","S","SO","O","NO"];
+        var windDir = dirs[Math.round(c.wind_direction_10m / 45) % 8];
 
-        // --- Pronóstico 2 días ---
-        let forecastRows = "";
-        for (let i = 0; i < 2; i++) {
-            const dayName = i === 0 ? "HOY" : "MAÑ";
-            const wInfo = getWeatherInfo(d.weather_code[i]);
-            const max = Math.round(d.temperature_2m_max[i]);
-            const min = Math.round(d.temperature_2m_min[i]);
-            forecastRows += `
-                <div class="forecast-row">
-                    <span class="forecast-day">${dayName}</span>
-                    <span class="forecast-icon">${wInfo.icon}</span>
-                    <span class="forecast-max">${max}°</span>
-                    <span class="forecast-min">${min}°</span>
-                </div>`;
+        // Pronóstico
+        var forecastRows = "";
+        for (var i = 0; i < 2; i++) {
+            var dayName = (i === 0) ? "HOY" : "MAÑ";
+            var wInfo = getWeatherInfo(d.weather_code[i]);
+            var max = Math.round(d.temperature_2m_max[i]);
+            var min = Math.round(d.temperature_2m_min[i]);
+            forecastRows +=
+                '<div class="forecast-row">' +
+                    '<span class="forecast-day">' + dayName + '</span>' +
+                    '<span class="forecast-icon">' + wInfo.icon + '</span>' +
+                    '<span class="forecast-max">' + max + '°</span>' +
+                    '<span class="forecast-min">' + min + '°</span>' +
+                '</div>';
         }
 
-        // --- Alertas ---
-        const alerts = getAlerts(c, d);
-        const hasCritical = alerts.some(a => a.level === "danger");
-        const maxVisible = 2;
-
-        const bannerHTML = hasCritical
-            ? `<div class="critical-banner">
-                   <span>🚨</span><span>ALERTA METEOROLÓGICA</span><span>🚨</span>
-               </div>`
+        // Alertas
+        var alerts = getAlerts(c, d);
+        var hasCritical = false;
+        for (var j = 0; j < alerts.length; j++) {
+            if (alerts[j].level === "danger") { hasCritical = true; break; }
+        }
+        var bannerHTML = hasCritical
+            ? '<div class="critical-banner">🚨 ALERTA METEOROLÓGICA 🚨</div>'
             : "";
 
-        const alertsHTML = alerts.slice(0, maxVisible).map(a =>
-            `<div class="alert-item ${a.level}">
-                <span class="ico">${a.icon}</span>
-                <span>${a.text}</span>
-             </div>`
-        ).join("");
+        var alertsHTML = "";
+        var maxVisible = 2;
+        for (var k = 0; k < alerts.length && k < maxVisible; k++) {
+            var a = alerts[k];
+            alertsHTML +=
+                '<div class="alert-item ' + a.level + '">' +
+                    '<span class="ico">' + a.icon + '</span>' +
+                    '<span>' + a.text + '</span>' +
+                '</div>';
+        }
 
-        // --- HTML completo ---
-        document.getElementById("dashboard").innerHTML = `
-            <!-- ====== CUADRANTE 1 ====== -->
-            <div class="card col-city">
-                <div class="card-header" style="width:100%;">
-                    <span class="card-title"><span class="live-dot"></span>EN VIVO</span>
-                    <span class="card-icon">📍</span>
-                </div>
-                <div class="city-name">${CIUDAD}</div>
-                <div class="city-time">${formatFechaBolivia(now)} · ${formatHoraBolivia(now)}</div>
-                <div class="temp-big">${temp}°C</div>
-                <div class="feels-like">Sensación: ${feels}°C</div>
-                <div class="weather-desc">${wNow.icon} ${wNow.desc}</div>
-            </div>
+        // HTML final
+        var html = "";
 
-            <!-- ====== CUADRANTE 2 ====== -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">DETALLES ACTUALES</span>
-                    <span class="card-icon">📊</span>
-                </div>
-                <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="detail-label">Humedad</span>
-                        <span class="detail-value">${hum}<span class="detail-unit">%</span></span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Viento</span>
-                        <span class="detail-value">${wind}<span class="detail-unit">km/h ${windDir}</span></span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Precipitación</span>
-                        <span class="detail-value">${prec}<span class="detail-unit">mm</span></span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Prob. lluvia hoy</span>
-                        <span class="detail-value">${prob}<span class="detail-unit">%</span></span>
-                    </div>
-                </div>
-            </div>
+        // CUADRANTE 1
+        html += '<div class="card col-1 col-city">' +
+            '<div class="card-header" style="width:100%;">' +
+                '<span class="card-title"><span class="live-dot"></span>EN VIVO</span>' +
+                '<span class="card-icon">📍</span>' +
+            '</div>' +
+            '<div class="city-name">' + CIUDAD + '</div>' +
+            '<div class="city-time">' + formatFechaBolivia(now) + ' · ' + formatHoraBolivia(now) + '</div>' +
+            '<div class="temp-big">' + temp + '°C</div>' +
+            '<div class="feels-like">Sensación: ' + feels + '°C</div>' +
+            '<div class="weather-desc">' + wNow.icon + ' ' + wNow.desc + '</div>' +
+        '</div>';
 
-            <!-- ====== CUADRANTE 3 ====== -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">PRONÓSTICO</span>
-                    <span class="card-icon">📅</span>
-                </div>
-                <div class="forecast-list">${forecastRows}</div>
+        // CUADRANTE 2
+        html += '<div class="card col-2">' +
+            '<div class="card-header">' +
+                '<span class="card-title">DETALLES ACTUALES</span>' +
+                '<span class="card-icon">📊</span>' +
+            '</div>' +
+            '<div class="details-grid">' +
+                '<div class="detail-item"><div class="detail-item-inner">' +
+                    '<div class="detail-label">Humedad</div>' +
+                    '<div class="detail-value">' + hum + '<span class="detail-unit">%</span></div>' +
+                '</div></div>' +
+                '<div class="detail-item"><div class="detail-item-inner">' +
+                    '<div class="detail-label">Viento</div>' +
+                    '<div class="detail-value">' + wind + '<span class="detail-unit"> km/h ' + windDir + '</span></div>' +
+                '</div></div>' +
+                '<div class="detail-item"><div class="detail-item-inner">' +
+                    '<div class="detail-label">Precipitación</div>' +
+                    '<div class="detail-value">' + prec + '<span class="detail-unit"> mm</span></div>' +
+                '</div></div>' +
+                '<div class="detail-item"><div class="detail-item-inner">' +
+                    '<div class="detail-label">Prob. lluvia hoy</div>' +
+                    '<div class="detail-value">' + prob + '<span class="detail-unit">%</span></div>' +
+                '</div></div>' +
+            '</div>' +
+        '</div>';
 
-                <div class="uv-row" style="border-left-color:${uvInfo.color};">
-                    <span class="uv-icon">☀️</span>
-                    <span class="uv-label">Índice UV</span>
-                    <span class="uv-value" style="color:${uvInfo.color};">${Math.round(uv)}</span>
-                    <span class="uv-cat" style="color:${uvInfo.color};">${uvInfo.cat}</span>
-                </div>
+        // CUADRANTE 3
+        html += '<div class="card col-3">' +
+            '<div class="card-header">' +
+                '<span class="card-title">PRONÓSTICO</span>' +
+                '<span class="card-icon">📅</span>' +
+            '</div>' +
+            '<div class="forecast-list">' + forecastRows + '</div>' +
+            '<div class="uv-row" style="border-left-color:' + uvInfo.color + ';">' +
+                '<span class="uv-icon">☀</span>' +
+                '<span class="uv-label">Índice UV</span>' +
+                '<span class="uv-value" style="color:' + uvInfo.color + ';">' + Math.round(uv) + '</span>' +
+                '<span class="uv-cat" style="color:' + uvInfo.color + ';">' + uvInfo.cat + '</span>' +
+            '</div>' +
+            '<div class="card-header" style="margin-top:5px; margin-bottom:2px;">' +
+                '<span class="card-title">ALERTAS</span>' +
+                '<span class="card-icon">⚠</span>' +
+            '</div>' +
+            bannerHTML +
+            '<div class="alert-box">' + alertsHTML + '</div>' +
+        '</div>';
 
-                <div class="card-header" style="margin-top:5px; margin-bottom:2px;">
-                    <span class="card-title">ALERTAS</span>
-                    <span class="card-icon">⚠️</span>
-                </div>
-                ${bannerHTML}
-                <div class="alert-box">${alertsHTML}</div>
-            </div>
-        `;
+        document.getElementById("dashboard").innerHTML = html;
     }
 
     // ============================================================
     // LOOP PRINCIPAL
     // ============================================================
-    async function update() {
-        try {
-            const data = await fetchWeather();
-            renderDashboard(data);
-        } catch (err) {
-            console.error(err);
-            document.getElementById("dashboard").innerHTML =
-                `<div class="error">⚠️ Error al cargar datos<br>
-                 <small>${err.message}</small><br>
-                 <small>Reintentando en 5 min...</small></div>`;
-        }
+    function showError(err) {
+        document.getElementById("dashboard").innerHTML =
+            '<div class="error">⚠ Error al cargar datos<br>' +
+            '<small>' + err.message + '</small><br>' +
+            '<small>Reintentando en 2 min...</small></div>';
+    }
+
+    function update() {
+        fetchWeather(function(err, data) {
+            if (err) {
+                showError(err);
+                // Reintento más rápido si falla
+                setTimeout(update, 2 * 60 * 1000);
+            } else {
+                renderDashboard(data);
+            }
+        });
     }
 
     update();
